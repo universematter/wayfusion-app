@@ -1,0 +1,64 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-card>
+
+  <ion-item>
+    <ion-avatar item-left>
+      <img src="{{context.account?.picture}}">
+    </ion-avatar>
+    <h3 class="text-overflow-ellipsis">{{context.account?.username}}</h3>
+    <ion-note item-right>
+      {{context.metadata_time_ago}}
+    </ion-note>
+    <button ion-button clear item-right large
+            (click)="$event.stopPropagation();openWebLink();">
+      <ion-icon name="logo-instagram"></ion-icon>
+    </button>
+    <!--<p>{{context.metadata_created_at | date: 'dd/MM/yyyy'}}</p>-->
+  </ion-item>
+  <ng-container *ngIf="context.images">
+    <img src="{{context.images[0].url}}">
+  </ng-container>
+
+  <ion-card-content>
+    <p [ngClass]="{ 'header-line-clamp': !showDetail }">{{context.caption}}</p>
+    <ion-note>
+      {{context.location.title}}
+    </ion-note>
+  </ion-card-content>
+
+  <ion-row>
+    <ion-col>
+      <button ion-button icon-left clear small full
+              (click)="$event.stopPropagation();">
+        <ion-icon name="heart"></ion-icon>
+        <div>{{context.likeCount}}</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button icon-left clear small full
+              (click)="$event.stopPropagation();">
+        <ion-icon name="text"></ion-icon>
+        <div>{{context.commentCount}}</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button clear small color="primary" full
+              icon-left
+              (click)="$event.stopPropagation();onShare(context);">
+        <ion-icon name='share-alt'></ion-icon>
+      </button>
+    </ion-col>
+    <!--<ion-col center text-center>-->
+
+    <!--</ion-col>-->
+  </ion-row>
+
+</ion-card>

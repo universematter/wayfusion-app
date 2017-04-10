@@ -1,0 +1,69 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-card>
+
+  <ion-item>
+    <ion-avatar item-left>
+      <img *ngIf="!showDetail" src="{{context.user.profile_image_url_https}}">
+      <img *ngIf="showDetail" src="{{context.retweeted_status ? context.retweeted_status.user.profile_image_url_https : context.user.profile_image_url_https}}">
+    </ion-avatar>
+    <h3 class="text-overflow-ellipsis" *ngIf="!showDetail">{{context.user.name}}</h3>
+    <h3 class="text-overflow-ellipsis" *ngIf="showDetail">{{context.retweeted_status ? context.retweeted_status.user.name : context.user.name}}</h3>
+    <ion-note item-right>
+      {{context.metadata_time_ago}}
+    </ion-note>
+    <button ion-button clear item-right large
+            (click)="$event.stopPropagation();openWebLink('weblink');">
+      <ion-icon name="logo-twitter"></ion-icon>
+    </button>
+
+    <!--<h3 class="header-line-clamp">{{context.text}}</h3>-->
+  </ion-item>
+  <ng-container *ngIf="context.entities.media">
+    <img *ngFor="let medium of context.entities.media"
+         src="{{medium.media_url_https}}">
+  </ng-container>
+
+  <ion-card-content>
+    <p *ngIf="!showDetail" class="header-line-clamp">{{context.text}}</p>
+    <p *ngIf="showDetail" [innerHTML]="(context.retweeted_status ? context.retweeted_status.text : context.text) | linky"></p>
+  </ion-card-content>
+
+  <ion-row>
+    <!--<ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>4</div>
+      </button>
+    </ion-col>-->
+    <ion-col>
+      <button ion-button icon-left clear small full
+              (click)="$event.stopPropagation();">
+        <ion-icon name="heart"></ion-icon>
+        <div>{{context.favorite_count || context.retweeted_status.favorite_count}}</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button icon-left clear small full
+              (click)="$event.stopPropagation();">
+        <ion-icon name="logo-twitter"></ion-icon>
+        <div>{{context.retweet_count}}</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button clear small color="primary" full
+              icon-left
+              (click)="$event.stopPropagation();onShare(context);">
+        <ion-icon name='share-alt'></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+
+</ion-card>

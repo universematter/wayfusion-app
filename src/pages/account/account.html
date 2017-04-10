@@ -1,0 +1,50 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <div padding-top text-center>
+    <img src="{{ user?.profile.picture || 'http://www.gravatar.com/avatar?d=mm&s=140'}}" alt="avatar">
+    <h2>{{user?.profile.name || user?.email}}</h2>
+
+    <ion-list inset>
+      <ion-list-header>
+        {{ 'CONNECTED_SOCIAL_MEDIA' | translate }}
+      </ion-list-header>
+      <button ion-button icon-left block color="facebook" (click)="onSignInWithProvider('facebook')" class="text-transform-none">
+        <ion-icon name="logo-facebook"></ion-icon>
+        Facebook
+      </button>
+      <button ion-button icon-left block color="twitter" (click)="onSignInWithProvider('twitter')" class="text-transform-none">
+        <ion-icon name="logo-twitter"></ion-icon>
+        Twitter
+      </button>
+     <!--<button ion-button icon-left block color="instagram" (click)="onSignInWithProvider('instagram')" class="text-transform-none">
+        <ion-icon name="logo-instagram"></ion-icon>
+        Instagram
+      </button>-->
+    </ion-list>
+
+    <ion-list inset>
+      <button ion-item (click)="updatePicture()">Update Picture</button>
+      <button ion-item (click)="changeUsername()">Change Username</button>
+      <button ion-item (click)="changePassword()">Change Password</button>
+      <button ion-item (click)="support()">Support</button>
+      <button ion-item (click)="logout()">Logout</button>
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,53 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-header no-border>
+  <ion-navbar>
+    <ion-buttons end *ngIf="showSkip">
+      <button ion-button (click)="startApp()" color="primary">Skip</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+
+    <ion-slide>
+      <img src="assets/img/appicon.svg" class="slide-image"/>
+      <h2 class="slide-title">
+        Welcome to WayFusion
+      </h2>
+      <p>
+        This application will help you stay in touch with social media in your city and current location.
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/swipe-left.svg" class="slide-image"/>
+      <h2 class="slide-title" >Favorite and forget</h2>
+      <p>Add something you like to your favorites by swiping left</p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/heart-connect.svg" class="slide-image"/>
+      <h2 class="slide-title">Do you want more?</h2>
+      <p>Connect other social media services to show more interesting results</p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/phone-ok.svg" class="slide-image"/>
+      <h2 class="slide-title">Ready to Play?</h2>
+      <button ion-button icon-right large clear (click)="startApp()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

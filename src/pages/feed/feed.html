@@ -1,0 +1,104 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-segment [(ngModel)]="segment" (ionChange)="updateFeed()">
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        Favorites
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentFilter()">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <!--<ion-toolbar no-border-top>
+    <ion-searchbar color="primary"
+                   [(ngModel)]="queryText"
+                   (ionInput)="updateFeed()"
+                   placeholder="Search">
+    </ion-searchbar>
+  </ion-toolbar>-->
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="updateFeed($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list #feedList *ngIf="segment === 'all'">
+
+      <ion-item-sliding *ngFor="let medium of media; let i = index;" #slidingItem>
+
+        <ion-item class="no-padding" no-lines (click)="goToMediaDetail(medium, $event)" (press)="onLongPress($event)">
+          <feed-card [type]="medium.metadata_model" [context]="medium"></feed-card>
+        </ion-item>
+
+        <ion-item-options side="right" (ionSwipe)="addFavorite(slidingItem, medium)">
+          <button ion-button color="favorite" (click)="addFavorite(slidingItem, medium)" *ngIf="!isInFavorites(medium)">
+            Favorite
+          </button>
+          <button ion-button color="danger" (click)="addFavorite(slidingItem, medium)" *ngIf="isInFavorites(medium)">
+            Remove
+          </button>
+        </ion-item-options>
+
+      </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'favorites'">
+
+    <ion-item-sliding *ngFor="let medium of favorites; let i = index;" #slidingItem>
+
+      <ion-item class="no-padding" no-lines (click)="goToMediaDetail(medium)">
+        <feed-card [type]="medium.metadata_model" [context]="medium"></feed-card>
+      </ion-item>
+
+      <ion-item-options side="right" (ionSwipe)="addFavorite(slidingItem, medium)">
+        <button ion-button color="danger" (click)="addFavorite(slidingItem, medium)">
+          Remove
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-fab bottom right #fab>
+    <button ion-fab
+            (click)="updateFeed()">
+      <ion-icon name="refresh"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <!--<ion-fab bottom right #fab>
+    <button ion-fab><ion-icon name="share"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab color="vimeo" (click)="openSocial('Vimeo', fab)"><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab color="google" (click)="openSocial('Google+', fab)"><ion-icon name="logo-googleplus"></ion-icon></button>
+      <button ion-fab color="twitter" (click)="openSocial('Twitter', fab)"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab color="facebook" (click)="openSocial('Facebook', fab)"><ion-icon name="logo-facebook"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>-->
+
+
+</ion-content>

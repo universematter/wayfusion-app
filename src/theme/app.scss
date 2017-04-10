@@ -1,0 +1,44 @@
+/*!
+ * WayFusion (www.wayfusion.com)
+ *
+ * Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.text-transform-none {
+  text-transform: none !important;
+}
+
+.header-line-clamp {
+  overflow: hidden !important;
+  white-space: normal;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  //-webkit-box-orient: vertical;
+  line-height: 17px !important;
+  max-height: 51px;
+}
+
+.text-overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+no-padding {
+  padding: 0;
+}
+
+img {
+  pointer-events: none;
+}
+
+/* Border issue with IOS */
+.list-ios>.item-block:first-child {
+  border-top: none !important;
+}
+.list-ios>.item-block:last-child {
+  border-bottom: none !important;
+}

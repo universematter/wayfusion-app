@@ -1,0 +1,18 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'POST_DETAIL' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <feed-card [type]="item.metadata_model" [context]="item" showDetail="true"></feed-card>
+</ion-content>

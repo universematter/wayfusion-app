@@ -1,0 +1,27 @@
+/*!
+ * WayFusion (www.wayfusion.com)
+ *
+ * Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Styles for all of the user pages:
+// Login, Signup, Support
+
+page-user {
+  .logo {
+    padding: 20px 0;
+    min-height: 200px;
+    text-align: center;
+
+    img {
+      max-width: 150px;
+    }
+  }
+
+  .list {
+    margin-bottom: 0;
+  }
+}

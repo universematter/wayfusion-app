@@ -1,0 +1,34 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>About</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="about-header">
+    <img src="assets/img/appicon.svg" alt="ionic logo">
+  </div>git
+  <div padding class="about-info">
+    <h4>WayFusion</h4>
+    <p>
+      This is open source application that will help you to stay in touch with social media in your city and current location.
+    </p>
+  </div>
+</ion-content>
