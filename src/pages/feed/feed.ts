@@ -18,7 +18,6 @@ import { FeedData } from '../../providers/feed-data';
 import { FeedFilterPage } from '../feed-filter/feed-filter';
 import { FeedDetailPage } from '../feed-detail/feed-detail';
 import { UserData } from '../../providers/user-data';
-import { USER_PROFILE } from '../../providers/config';
 import { Observable } from "rxjs";
 
 
@@ -34,7 +33,7 @@ export class FeedPage {
   @ViewChild('feedList', { read: List }) feedList: List;
 
   queryText = '';
-  excludeProviders: any;
+  excludedProviders: any;
   segment = 'all';
   media: any[] = [];
   favorites: any[] = [];
@@ -54,6 +53,10 @@ export class FeedPage {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
       dismissOnPageChange: true
+    });
+
+    this.feedData.getExcludedProviders().subscribe((providers) => {
+      this.excludedProviders = providers || [];
     });
 
   }
@@ -77,30 +80,28 @@ export class FeedPage {
     return 0;
   }
 
-  updateFeed(refresher?: any) {
-    console.log('segment', this.segment);
+  updateFeed(refresher?: any, nextPage?: boolean) {
     !refresher && this.presentLoading();
-    this.storage.get(USER_PROFILE).then((profile) => {
-      if (!profile) {
-        return;
-      }
+    this.feedData.getProviders().subscribe((providers) => {
       // Close any open sliding items when the feed updates
       this.feedList && this.feedList.closeSlidingItems();
 
-      const observableBatch = this.getFeedBatch(profile);
+      const observableBatch = this.getFeedBatch(providers, nextPage);
       if (observableBatch.length === 0) {
         return;
       }
       const observables = observableBatch.map(item => item.observable);
       Observable.forkJoin(...observables).subscribe((results: any[]) => {
-        this.media = [];
-        results.forEach((result, index) => {
-          observableBatch[index].handler.call(this, result);
+        let newMedia = results.map((items, index) => {
+          return observableBatch[index].handler.call(this, items);
         });
 
-        this.media.sort(this.sortDesc);
+        //flatten
+        newMedia = newMedia.reduce((prev, current) => prev.concat(current));
 
-        this.media.forEach((medium) => {
+        newMedia.sort(this.sortDesc);
+
+        newMedia.forEach((medium) => {
           medium.metadata_time_ago = moment(medium.metadata_created_at).fromNow(true);
         });
 
@@ -110,7 +111,8 @@ export class FeedPage {
           medium.metadata_time_ago = moment(medium.metadata_created_at).fromNow(true);
         });
 
-        console.log(this.media, this.favorites);
+        this.media = nextPage ? this.media.concat(newMedia) : newMedia;
+        console.log(newMedia, this.favorites);
         if (refresher) {
           refresher.complete();
         } else {
@@ -129,7 +131,7 @@ export class FeedPage {
 
   }
 
-  private getFeedBatch(profile: any) {
+  private getFeedBatch(providers: any, nextPage: boolean) {
     let observableBatch: any[] = [];
 
     observableBatch.push({
@@ -140,34 +142,39 @@ export class FeedPage {
           result._createdAt = item.createdAt;
           return result;
         });
-        this.favorites = items;
+        return items;
       }
     });
 
     if (this.segment === 'all') {
-      const instagram = this.feedData.getInstagram();
-      const tweets = this.feedData.getTweets();
+      const body = {
+        nextPage: nextPage
+      };
+      const instagram = this.feedData.getInstagram(body);
+      const tweets = this.feedData.getTweets(body);
 
-      // if (profile.instagram) {
+      // if (providers.indexOf('Instagram') !== -1) {
       observableBatch.push({
         observable: instagram,
         handler: (items: any) => {
           items = items.filter((item: any) => {
-            return item.likeCount > 10;
+            return item.likeCount > 20;
           });
-          this.media = this.media.concat(items);
+          return items;
         }
       });
       // }
 
-      if (profile.twitter) {
+      if (providers.indexOf('Twitter') !== -1) {
         observableBatch.push({
           observable: tweets,
           handler: (items: any) => {
             items.statuses = items.statuses.filter((tweet: any) => {
-              return tweet.retweet_count > 250;
+              // return tweet.retweet_count > 1;
+              return true;
             });
-            this.media = this.media.concat(items.statuses);
+            console.log(items.statuses);
+            return items.statuses;
           }
         })
       }
@@ -177,12 +184,12 @@ export class FeedPage {
   }
 
   presentFilter() {
-    let modal = this.modalCtrl.create(FeedFilterPage, this.excludeProviders);
+    let modal = this.modalCtrl.create(FeedFilterPage, this.excludedProviders);
     modal.present();
 
     modal.onWillDismiss((data: any[]) => {
       if (data) {
-        this.excludeProviders = data;
+        this.excludedProviders = data;
         this.updateFeed();
       }
     });

@@ -45,6 +45,6 @@ and pinch of love ♥.
 
 ## License
 
-Copyright (c) 2017-present Sergio Khlopenkov. This source code is licensed under the [MIT](https://github.com/wayfusion/wayfusion-app/blob/master/LICENSE.txt) license.
+Copyright (c) 2017-present Sergio Khlopenkov. This source code is licensed under the [MIT](https://github.com/wayfusion/wayfusion-app/blob/master/LICENSE) license.
 
 The documentation to the project is licensed under the [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/) license.

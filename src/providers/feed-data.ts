@@ -9,13 +9,17 @@
 
 import { Injectable } from '@angular/core';
 
-import {Api} from './api';
+import { Api } from './api';
 import { Http } from '@angular/http';
 
+import { Storage } from '@ionic/storage';
+
 import { UserData } from './user-data';
+import { EXCLUDED_PROVIDERS } from './config';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import { Observable } from "rxjs";
 
 
 @Injectable()
@@ -24,10 +28,12 @@ export class FeedData {
 
   constructor(public api: Api,
               public http: Http,
-              public user: UserData) { }
+              public userData: UserData,
+              public storage: Storage) {
+  }
 
-  getInstagram() {
-    return this.api.post('ls/instagram').map(resp => {
+  getInstagram(body: any) {
+    return this.api.post('ls/instagram', body).map(resp => {
       let media = resp.json();
       media = media.map((medium: any) => {
         medium.metadata_model = 'instagram';
@@ -38,8 +44,8 @@ export class FeedData {
     });
   }
 
-  getTweets() {
-    return this.api.post('ls/twitter').map((resp: any) => {
+  getTweets(body: any) {
+    return this.api.post('ls/twitter', body).map((resp: any) => {
       let result = resp.json();
       result.statuses = result.statuses.map((tweet: any) => {
         tweet.metadata_model = 'twitter';
@@ -52,6 +58,20 @@ export class FeedData {
 
   getFavorites() {
     return this.api.get('favorite').map(resp => resp.json());
+  }
+
+  getProviders() {
+    return Observable.fromPromise(this.userData.getUser())
+      .mergeMap((user) => {
+        let providers = [];
+        providers.push('Instagram');
+        user.twitter && providers.push('Twitter');
+        return Observable.of(providers);
+      });
+  }
+
+  getExcludedProviders() {
+    return Observable.fromPromise(this.storage.get(EXCLUDED_PROVIDERS));
   }
 
 }

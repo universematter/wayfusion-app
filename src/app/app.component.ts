@@ -51,13 +51,14 @@ export class WayFusionApp {
   // { title: 'About', name: 'Tabs', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
   loggedInPages: PageInterface[] = [
     {title: 'Feed', name: 'Tabs', component: TabsPage, tabComponent: FeedPage, index: 0, icon: 'calendar'},
-    {title: 'About', name: 'About', component: AboutPage, icon: 'information-circle'},
     {title: 'Profile', name: 'Tabs', component: TabsPage, tabComponent: AccountPage, index: 1, icon: 'person'},
+    {title: 'About', name: 'About', component: AboutPage, icon: 'information-circle'},
     {title: 'Logout', name: 'Login', component: LoginPage, icon: 'log-out', logsOut: true}
   ];
   loggedOutPages: PageInterface[] = [
     {title: 'Login', name: 'Login', component: LoginPage, icon: 'log-in'},
-    {title: 'Signup', name: 'Signup', component: SignupPage, icon: 'person-add'}
+    {title: 'Signup', name: 'Signup', component: SignupPage, icon: 'person-add'},
+    {title: 'About', name: 'About', component: AboutPage, icon: 'information-circle'}
   ];
   rootPage: any;
 
@@ -105,7 +106,6 @@ export class WayFusionApp {
   }
 
   openPage(page: PageInterface) {
-    console.log('open page', page);
     let params = {};
     if (page.index) {
       params = {tabIndex: page.index};

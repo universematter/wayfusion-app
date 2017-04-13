@@ -11,11 +11,12 @@
 
   <ion-item>
     <ion-avatar item-left>
-      <img *ngIf="!showDetail" src="{{context.user.profile_image_url_https}}">
+      <img *ngIf="!showDetail" src="{{context.user?.profile_image_url_https}}">
       <img *ngIf="showDetail" src="{{context.retweeted_status ? context.retweeted_status.user.profile_image_url_https : context.user.profile_image_url_https}}">
     </ion-avatar>
     <h3 class="text-overflow-ellipsis" *ngIf="!showDetail">{{context.user.name}}</h3>
-    <h3 class="text-overflow-ellipsis" *ngIf="showDetail">{{context.retweeted_status ? context.retweeted_status.user.name : context.user.name}}</h3>
+    <h3 class="text-overflow-ellipsis" *ngIf="showDetail">{{context.retweeted_status ?
+      context.retweeted_status.user.name : context.user.name}}</h3>
     <ion-note item-right>
       {{context.metadata_time_ago}}
     </ion-note>
@@ -47,7 +48,7 @@
       <button ion-button icon-left clear small full
               (click)="$event.stopPropagation();">
         <ion-icon name="heart"></ion-icon>
-        <div>{{context.favorite_count || context.retweeted_status.favorite_count}}</div>
+        <div>{{context.favorite_count || context.retweeted_status?.favorite_count || 0}}</div>
       </button>
     </ion-col>
     <ion-col>

@@ -19,3 +19,4 @@ export const HAS_LOGGED_IN = 'hasLoggedIn';
 export const HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 export const DEFAULT_TOKEN_NAME = 'token';
 export const USER_PROFILE = 'userProfile';
+export const EXCLUDED_PROVIDERS = 'excludedProviders';

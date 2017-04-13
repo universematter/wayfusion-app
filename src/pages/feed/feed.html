@@ -83,6 +83,10 @@
 
   </ion-list>
 
+  <ion-infinite-scroll (ionInfinite)="updateFeed($event, true)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
   <ion-fab bottom right #fab>
     <button ion-fab
             (click)="updateFeed()">

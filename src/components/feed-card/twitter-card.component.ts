@@ -58,7 +58,7 @@ export class TwitterCardComponent extends DynamicComponent {
     console.log(this.context);
     switch (type) {
       case 'weblink':
-        link = `https://twitter.com/${this.context.user.screen_name}/status/${this.context.id_str}`;
+        link = `https://twitter.com/${this.context.userData.screen_name}/status/${this.context.id_str}`;
         break;
       case 'contentlink':
         link = this.context.entities.urls[0] ? `${this.context.entities.urls[0]}` : null;
