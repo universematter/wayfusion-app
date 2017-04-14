@@ -26,6 +26,8 @@ and pinch of love ♥.
 
 ## App Preview
 
+- [Google Play](https://play.google.com/store/apps/details?id=com.wayfusion.app) / [Web Version](http://app.wayfusion.com)
+
 - [Feed / Favorites Pages](https://github.com/wayfusion/wayfusion-app/blob/master/src/pages/feed/feed.html)
 
   <img src="resources/screenshots/FeedPage.png" alt="Feed">
