@@ -8,6 +8,7 @@ Built on top of [Ionic 3](https://ionicframework.com/),
 with [Typescript](https://www.typescriptlang.org/)
 and pinch of love ♥.
 
+Demo: [Google Play](https://play.google.com/store/apps/details?id=com.wayfusion.app) / [Web Version](http://app.wayfusion.com)
 
 ## Table of Contents
  - [Getting Started](#getting-started)
@@ -25,8 +26,6 @@ and pinch of love ♥.
 * Run with browser `ionic serve` or with mobile `ionic cordova:run android`
 
 ## App Preview
-
-- [Google Play](https://play.google.com/store/apps/details?id=com.wayfusion.app) / [Web Version](http://app.wayfusion.com)
 
 - [Feed / Favorites Pages](https://github.com/wayfusion/wayfusion-app/blob/master/src/pages/feed/feed.html)
 
