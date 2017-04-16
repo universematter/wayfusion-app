@@ -33,7 +33,6 @@ export class FeedPage {
   @ViewChild('feedList', { read: List }) feedList: List;
 
   queryText = '';
-  excludedProviders: any;
   segment = 'all';
   media: any[] = [];
   favorites: any[] = [];
@@ -53,10 +52,6 @@ export class FeedPage {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...',
       dismissOnPageChange: true
-    });
-
-    this.feedData.getExcludedProviders().subscribe((providers) => {
-      this.excludedProviders = providers || [];
     });
 
   }
@@ -82,7 +77,7 @@ export class FeedPage {
 
   updateFeed(refresher?: any, nextPage?: boolean) {
     !refresher && this.presentLoading();
-    this.feedData.getProviders().subscribe((providers) => {
+    this.feedData.getAvailableProviders().subscribe((providers) => {
       // Close any open sliding items when the feed updates
       this.feedList && this.feedList.closeSlidingItems();
 
@@ -153,17 +148,17 @@ export class FeedPage {
       const instagram = this.feedData.getInstagram(body);
       const tweets = this.feedData.getTweets(body);
 
-      // if (providers.indexOf('Instagram') !== -1) {
-      observableBatch.push({
-        observable: instagram,
-        handler: (items: any) => {
-          items = items.filter((item: any) => {
-            return item.likeCount > 20;
-          });
-          return items;
-        }
-      });
-      // }
+      if (providers.indexOf('Instagram') !== -1) {
+        observableBatch.push({
+          observable: instagram,
+          handler: (items: any) => {
+            items = items.filter((item: any) => {
+              return item.likeCount > 20;
+            });
+            return items;
+          }
+        });
+      }
 
       if (providers.indexOf('Twitter') !== -1) {
         observableBatch.push({
@@ -184,15 +179,14 @@ export class FeedPage {
   }
 
   presentFilter() {
-    let modal = this.modalCtrl.create(FeedFilterPage, this.excludedProviders);
-    modal.present();
+      let modal = this.modalCtrl.create(FeedFilterPage);
+      modal.present();
 
-    modal.onWillDismiss((data: any[]) => {
-      if (data) {
-        this.excludedProviders = data;
-        this.updateFeed();
-      }
-    });
+      modal.onWillDismiss((data: any[]) => {
+        if (data) {
+          this.updateFeed();
+        }
+      });
 
   }
 

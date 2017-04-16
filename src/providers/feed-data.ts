@@ -70,8 +70,25 @@ export class FeedData {
       });
   }
 
+  getAvailableProviders() {
+    return Observable.forkJoin([this.getProviders(), this.getExcludedProviders()])
+      .mergeMap((providers) => {
+        let result: any[] = providers[0].filter((item: string) => providers[1].indexOf(item) === -1);
+        return Observable.of(result);
+      })
+  }
+
   getExcludedProviders() {
-    return Observable.fromPromise(this.storage.get(EXCLUDED_PROVIDERS));
+    return Observable.fromPromise(this.storage.get(EXCLUDED_PROVIDERS))
+      .mergeMap((value) => {
+      console.log('get excl prov', value);
+        value = value || [];
+        return Observable.of(value);
+      });
+  }
+
+  setExcludedProviders(value: any) {
+    return Observable.fromPromise(this.storage.set(EXCLUDED_PROVIDERS, value));
   }
 
 }

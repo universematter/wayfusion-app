@@ -8,16 +8,9 @@
  */
 
 $categories: (
- ionic: color($colors, primary),
- angular: #AC282B,
- communication: #8E8D93,
- tooling: #FE4C52,
- services: #FD8B2D,
- design: #FED035,
- workshop: #69BB7B,
- food: #3BC7C4,
- documentation: #B16BE3,
- navigation: #6600CC,
+  instagram: color($colors, instagram),
+  twitter: color($colors, twitter),
+  facebook: color($colors, facebook)
 );
 
 @function auxiliary-categories() {
@@ -25,10 +18,10 @@ $categories: (
 }
 
 page-feed {
-  @each $track, $value in auxiliary-categories() {
-   ion-item-sliding[track=#{$track}] ion-label {
+  @each $provider, $value in auxiliary-categories() {
+   ion-item-sliding[provider=#{$provider}] ion-card {
      border-left: 2px solid $value;
-     padding-left: 10px;
+     //padding-left: 10px;
    }
   }
 }

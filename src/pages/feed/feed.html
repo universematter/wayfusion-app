@@ -46,7 +46,7 @@
 
   <ion-list #feedList *ngIf="segment === 'all'">
 
-      <ion-item-sliding *ngFor="let medium of media; let i = index;" #slidingItem>
+      <ion-item-sliding *ngFor="let medium of media; let i = index;" #slidingItem [attr.provider]="medium.metadata_model | lowercase">
 
         <ion-item class="no-padding" no-lines (click)="goToMediaDetail(medium, $event)" (press)="onLongPress($event)">
           <feed-card [type]="medium.metadata_model" [context]="medium"></feed-card>

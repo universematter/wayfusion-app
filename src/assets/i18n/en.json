@@ -71,5 +71,7 @@
   "POST_DETAIL": "Post detail",
 
   "LINK_COPY_SUCCESS": "Link copied",
-  "LINK_COPY_FAILURE": "Failed to copy a link"
+  "LINK_COPY_FAILURE": "Failed to copy a link",
+
+  "FILTER_SOCIAL_NETWORKS": "Filter social networks"
 }

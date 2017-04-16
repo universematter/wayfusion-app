@@ -13,6 +13,8 @@ import { NavParams, ViewController } from 'ionic-angular';
 
 import { FeedData } from '../../providers/feed-data';
 
+import { Observable } from "rxjs";
+
 
 @Component({
   selector: 'page-feed-filter',
@@ -26,14 +28,14 @@ export class FeedFilterPage {
     public navParams: NavParams,
     public viewCtrl: ViewController
   ) {
-    let excludedProviderNames = this.navParams.data;
 
-    this.feedData.getProviders().subscribe((names: string[]) => {
+    Observable.forkJoin([this.feedData.getProviders(), this.feedData.getExcludedProviders()])
+    .subscribe((providers: any[]) => {
 
-      names.forEach(name => {
+      providers[0].forEach((provider: string) => {
         this.providers.push({
-          name: name,
-          isChecked: (excludedProviderNames.indexOf(name) === -1)
+          name: provider,
+          isChecked: (providers[1].indexOf(provider) === -1)
         });
       });
 
@@ -48,7 +50,15 @@ export class FeedFilterPage {
 
   applyFilters() {
     let excludedProviderNames = this.providers.filter(c => !c.isChecked).map(c => c.name);
-    this.viewCtrl.dismiss(excludedProviderNames);
+    this.feedData.setExcludedProviders(excludedProviderNames).subscribe(() => {
+      this.dismiss(excludedProviderNames);
+    });
+  }
+
+  dismiss(data?: any) {
+    // using the injected ViewController this page
+    // can "dismiss" itself and pass back data
+    this.viewCtrl.dismiss(data);
   }
 
 }
