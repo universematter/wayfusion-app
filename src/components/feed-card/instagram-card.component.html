@@ -23,9 +23,32 @@
     </button>
     <!--<p>{{context.metadata_created_at | date: 'dd/MM/yyyy'}}</p>-->
   </ion-item>
-  <ng-container *ngIf="context.images">
+  <ng-container *ngIf="context.images && context.mediaType != 8">
     <img src="{{context.images[0].url}}">
   </ng-container>
+
+  <div [hidden]="context.mediaType != 8">
+    <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager loop>
+      <ng-container *ngIf="context.mediaType == 8">
+        <ion-slide *ngFor="let image of context.images">
+          <ng-container *ngIf="image[0]">
+            <img src="{{image[0].url}}">
+          </ng-container>
+        </ion-slide>
+      </ng-container>
+    </ion-slides>
+
+    <div class="slides-button-next" (click)="onSlideNext($event)">
+      <button ion-button icon-only clear large color="light">
+        <ion-icon name="arrow-dropright-circle"></ion-icon>
+      </button>
+    </div>
+    <div class="slides-button-prev" (click)="onSlidePrev($event)">
+      <button ion-button icon-only clear large color="light">
+        <ion-icon name="arrow-dropleft-circle"></ion-icon>
+      </button>
+    </div>
+  </div>
 
   <ion-card-content>
     <p [ngClass]="{ 'header-line-clamp': !showDetail }">{{context.caption}}</p>

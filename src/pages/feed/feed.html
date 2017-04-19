@@ -48,7 +48,7 @@
 
       <ion-item-sliding *ngFor="let medium of media; let i = index;" #slidingItem [attr.provider]="medium.metadata_model | lowercase">
 
-        <ion-item class="no-padding" no-lines (click)="goToMediaDetail(medium, $event)" (press)="onLongPress($event)">
+        <ion-item class="no-padding" no-lines (click)="goToMediaDetail(medium, $event)">
           <feed-card [type]="medium.metadata_model" [context]="medium"></feed-card>
         </ion-item>
 

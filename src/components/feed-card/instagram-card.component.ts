@@ -7,11 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component} from '@angular/core';
-import {DynamicComponent} from './dynamic-component';
-import {ActionSheet, ActionSheetController, ToastController} from 'ionic-angular';
-import {Clipboard} from '@ionic-native/clipboard';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, ViewChild } from '@angular/core';
+import { DynamicComponent } from './dynamic-component';
+import { ActionSheet, ActionSheetController, ToastController, Slides } from 'ionic-angular';
+import { Clipboard } from '@ionic-native/clipboard';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'instagram-card',
@@ -20,6 +20,8 @@ import {TranslateService} from '@ngx-translate/core';
 export class InstagramCardComponent extends DynamicComponent {
 
   actionSheet: ActionSheet;
+
+  @ViewChild('slides') slides: Slides;
 
   constructor(public actionSheetCtrl: ActionSheetController,
               public clipboard: Clipboard,
@@ -52,6 +54,31 @@ export class InstagramCardComponent extends DynamicComponent {
 
   openWebLink() {
     window.open(this.context.webLink, '_blank');
+  }
+
+  onSlideChangeStart(slider: Slides) {
+    // console.log(slider);
+  }
+
+  ngOnInit () {
+    if (!this.slides) {
+      return;
+    }
+    // console.log('ngOnInit event', this.slides);
+    // this.slides.lockSwipes(true);
+    this.slides.onlyExternal = true;
+    this.slides.update();
+    this.slides.resize();
+  }
+
+  onSlideNext(event: Event) {
+    event.stopPropagation();
+    this.slides.slideNext();
+  }
+
+  onSlidePrev(event: Event) {
+    event.stopPropagation();
+    this.slides.slidePrev();
   }
 
 }

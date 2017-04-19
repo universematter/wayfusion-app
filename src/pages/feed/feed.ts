@@ -247,8 +247,4 @@ export class FeedPage {
     return this.favorites.findIndex(m => m.id === medium.id && m.metadata_model === medium.metadata_model) !== -1;
   }
 
-  onLongPress(event:any) {
-    console.log('long press event', event);
-  }
-
 }

@@ -1,0 +1,33 @@
+/*!
+ * WayFusion (www.wayfusion.com)
+ *
+ * Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.slides-button-prev,
+.slides-button-next {
+  position: absolute;
+  top: 50%;
+  width: 27px;
+  height: 44px;
+  margin-top: -22px;
+  z-index: 10;
+  cursor: pointer;
+  background-size: 27px 44px;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: .6;
+}
+
+.slides-button-prev {
+  left: 10px;
+  right: auto;
+}
+
+.slides-button-next {
+  right: 50px;
+  left: auto;
+}

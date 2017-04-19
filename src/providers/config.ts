@@ -7,7 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export const BASE_URL = 'http://wayfusion-api.herokuapp.com';
+export const BASE_URL = 'https://api.wayfusion.com';
+// export const BASE_URL = 'http://wayfusion.test:3000';
 export const API_URL = BASE_URL + '/api';
 export const CLIENT_SECRET = '82w85z3DXpLhr1okTFlrtx^jQiwq48xp';
 export const CLIENT_ID = 'webV1';

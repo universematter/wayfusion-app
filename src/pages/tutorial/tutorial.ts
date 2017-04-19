@@ -51,7 +51,8 @@ export class TutorialPage {
   }
 
 	ionViewWillEnter() {
-		this.slides.update();
+      this.slides.update();
+      this.slides.resize();
 	}
 
   ionViewDidEnter() {

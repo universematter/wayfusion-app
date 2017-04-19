@@ -81,7 +81,6 @@ export class FeedData {
   getExcludedProviders() {
     return Observable.fromPromise(this.storage.get(EXCLUDED_PROVIDERS))
       .mergeMap((value) => {
-      console.log('get excl prov', value);
         value = value || [];
         return Observable.of(value);
       });
