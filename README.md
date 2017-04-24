@@ -10,6 +10,10 @@ and pinch of love ♥.
 
 Demo: [Google Play](https://play.google.com/store/apps/details?id=com.wayfusion.app) / [Web Version](http://app.wayfusion.com)
 
+Create your own user or use test credentials:
+* Email: `hello@wayfusion.com`
+* Password: `123456`
+
 ## Table of Contents
  - [Getting Started](#getting-started)
  - [App Preview](#app-preview)
