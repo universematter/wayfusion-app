@@ -31,6 +31,7 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FeedCardComponent } from '../components/feed-card/feed-card.component';
 import { TwitterCardComponent } from '../components/feed-card/twitter-card.component';
 import { InstagramCardComponent } from '../components/feed-card/instagram-card.component';
+import { FoursquareCardComponent } from '../components/feed-card/foursquare-card.component';
 
 import { PressDirective } from '../directives/gestures/long-press.directive';
 
@@ -76,6 +77,7 @@ export function createTranslateLoader(http: Http) {
     FeedCardComponent,
     TwitterCardComponent,
     InstagramCardComponent,
+    FoursquareCardComponent,
     PressDirective
   ],
   imports: [
@@ -121,7 +123,8 @@ export function createTranslateLoader(http: Http) {
     TabsPage,
     TutorialPage,
     TwitterCardComponent,
-    InstagramCardComponent
+    InstagramCardComponent,
+    FoursquareCardComponent
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

@@ -20,7 +20,7 @@ import { Storage } from '@ionic/storage';
 
 import { Api } from './api';
 import { Token, AuthConfigDefaults } from './token';
-import { API_URL, HAS_LOGGED_IN, CLIENT_SECRET, CLIENT_ID, FACEBOOK_ID, TWITTER_KEY } from './config';
+import { API_URL, HAS_LOGGED_IN, CLIENT_SECRET, CLIENT_ID, FACEBOOK_ID, TWITTER_KEY, FOURSQUARE_ID } from './config';
 
 import { AppAvailability } from '@ionic-native/app-availability';
 import { Facebook } from '@ionic-native/facebook';
@@ -83,6 +83,8 @@ export class Authentication {
       case 'twitter':
         authResult = nativeAppIsAvailable.mergeMap(() => this.authTwitterSDK());
         break;
+      default:
+        authResult = this.authBrowser(provider);
     }
 
     return authResult.catch(() => {
@@ -129,6 +131,13 @@ export class Authentication {
     return seq.mergeMap((token) => this.setToken(token));
   }
 
+  private authFoursquareToken(accessToken: string) {
+    let seq = this.api.post('oauth/token/foursquare', {
+      access_token: accessToken
+    });
+    return seq.mergeMap((token) => this.setToken(token));
+  }
+
   private setToken = (tokenData: any) => {
     tokenData = tokenData.json();
     this.storage.set(HAS_LOGGED_IN, true);
@@ -162,9 +171,10 @@ export class Authentication {
 
     hello.init({
       facebook: FACEBOOK_ID,
-      twitter: TWITTER_KEY
+      twitter: TWITTER_KEY,
+      foursquare : FOURSQUARE_ID
     }, {
-      redirect_uri: window.location.origin,
+      redirect_uri: window.location.origin + '/redirect.html',
       oauth_proxy: API_URL + '/oauthproxy'
     });
 
@@ -195,8 +205,10 @@ export class Authentication {
           secret: authResponse.oauth_token_secret,
           userId: authResponse.user_id
         };
-        console.log(tokenData, authResponse);
         obs = this.authTwitterToken(tokenData);
+        break;
+      case 'foursquare':
+        obs = this.authFoursquareToken(authResponse.access_token);
         break;
     }
 

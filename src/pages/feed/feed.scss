@@ -10,7 +10,8 @@
 $categories: (
   instagram: color($colors, instagram),
   twitter: color($colors, twitter),
-  facebook: color($colors, facebook)
+  facebook: color($colors, facebook),
+  foursquare: color($colors, foursquare)
 );
 
 @function auxiliary-categories() {

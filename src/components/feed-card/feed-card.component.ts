@@ -13,9 +13,10 @@ import {
   ComponentFactoryResolver, ComponentRef
 } from '@angular/core';
 
-import {DynamicComponent} from './dynamic-component'
-import {TwitterCardComponent} from './twitter-card.component';
-import {InstagramCardComponent} from './instagram-card.component';
+import { DynamicComponent } from './dynamic-component'
+import { TwitterCardComponent } from './twitter-card.component';
+import { InstagramCardComponent } from './instagram-card.component';
+import { FoursquareCardComponent } from './foursquare-card.component';
 
 @Component({
   selector: 'feed-card',
@@ -23,7 +24,7 @@ import {InstagramCardComponent} from './instagram-card.component';
 })
 export class FeedCardComponent implements OnInit, OnDestroy {
 
-  @ViewChild('feedcard', { read: ViewContainerRef })
+  @ViewChild('feedcard', {read: ViewContainerRef})
   container: ViewContainerRef;
 
   @Input()
@@ -37,7 +38,8 @@ export class FeedCardComponent implements OnInit, OnDestroy {
 
   private mappings: any = {
     'twitter': TwitterCardComponent,
-    'instagram': InstagramCardComponent
+    'instagram': InstagramCardComponent,
+    'foursquare': FoursquareCardComponent
   };
 
   private componentRef: ComponentRef<{}>;

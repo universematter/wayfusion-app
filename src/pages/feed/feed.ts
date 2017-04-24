@@ -147,6 +147,7 @@ export class FeedPage {
       };
       const instagram = this.feedData.getInstagram(body);
       const tweets = this.feedData.getTweets(body);
+      const venues = this.feedData.getVenues(body);
 
       if (providers.indexOf('Instagram') !== -1) {
         observableBatch.push({
@@ -170,6 +171,16 @@ export class FeedPage {
             });
             console.log(items.statuses);
             return items.statuses;
+          }
+        })
+      }
+
+      if (providers.indexOf('Foursquare') !== -1) {
+        observableBatch.push({
+          observable: venues,
+          handler: (items: any) => {
+            console.log(items);
+            return items;
           }
         })
       }

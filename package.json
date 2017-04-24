@@ -50,6 +50,7 @@
   },
   "config": {
     "ionic_bundler": "webpack",
-    "ionic_webpack": "./webpack.config.js"
+    "ionic_webpack": "./webpack.config.js",
+    "ionic_copy": "./copy.config.js"
   }
 }

@@ -14,10 +14,10 @@ import {Clipboard} from '@ionic-native/clipboard';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'twitter-card',
-  templateUrl: 'twitter-card.component.html'
+  selector: 'foursquare-card',
+  templateUrl: 'foursquare-card.component.html'
 })
-export class TwitterCardComponent extends DynamicComponent {
+export class FoursquareCardComponent extends DynamicComponent {
   actionSheet: ActionSheet;
 
   constructor(public actionSheetCtrl: ActionSheetController,
@@ -32,13 +32,13 @@ export class TwitterCardComponent extends DynamicComponent {
     // console.log('show detail', this.showDetail);
   }
 
-  onShare(tweet: any) {
+  onShare(item: any) {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Share Tweet',
+      title: 'Share Venue',
       buttons: [
         {
           text: 'Copy Link',
-          handler: this.clipboardCopy('https://twitter.com/statuses/' + tweet.id_str)
+          handler: this.clipboardCopy(item.tips[0].canonicalUrl)
         },
         {
           text: 'Share via ...'
@@ -58,10 +58,7 @@ export class TwitterCardComponent extends DynamicComponent {
     console.log(this.context);
     switch (type) {
       case 'weblink':
-        link = `https://twitter.com/${this.context.user.screen_name}/status/${this.context.id_str}`;
-        break;
-      case 'contentlink':
-        link = this.context.entities.urls[0] ? `${this.context.entities.urls[0]}` : null;
+        link = `${this.context.tips[0].canonicalUrl}`;
         break;
     }
 

@@ -56,6 +56,24 @@ export class FeedData {
     });
   }
 
+  getVenues(body: any) {
+    return this.api.post('ls/foursquare', body).map((resp: any) => {
+      let result = resp.json();
+      if (!result.groups.length) {
+        return [];
+      }
+      result = result.groups[0].items.map((venue: any) => {
+        venue.metadata_model = 'foursquare';
+        if (venue.tips && venue.tips[0]) {
+          venue.metadata_created_at = new Date(venue.tips[0].createdAt * 1000);
+          venue.id = venue.venue.id;
+        }
+        return venue;
+      });
+      return result;
+    });
+  }
+
   getFavorites() {
     return this.api.get('favorite').map(resp => resp.json());
   }
@@ -65,7 +83,8 @@ export class FeedData {
       .mergeMap((user) => {
         let providers = [];
         providers.push('Instagram');
-        user.twitter && providers.push('Twitter');
+        /*user.twitter && */providers.push('Twitter');
+        /*user.foursquare && */providers.push('Foursquare');
         return Observable.of(providers);
       });
   }

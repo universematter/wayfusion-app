@@ -1,0 +1,25 @@
+/*!
+ * WayFusion (www.wayfusion.com)
+ *
+ * Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.image-with-overlay {
+  position: relative;
+}
+
+.image-with-overlay-content {
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  width: 100%;
+  opacity: .9;
+  .content-title {
+    font-size: 2em;
+    color: #fff;
+    text-shadow: 2px 2px 8px #000;
+  }
+}

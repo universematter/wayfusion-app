@@ -1,0 +1,99 @@
+<!--
+  ~ WayFusion (www.wayfusion.com)
+  ~
+  ~ Copyright (c) 2017, Sergio Khlopenkov. All rights reserved.
+  ~
+  ~ This source code is licensed under the MIT license found in the
+  ~ LICENSE file in the root directory of this source tree.
+  -->
+
+<ion-card>
+  <ng-container *ngIf="context && context.tips && context.tips[0] as contextTip">
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="{{contextTip.user.photo.prefix + '90x90' +  contextTip.user.photo.suffix}}">
+      </ion-avatar>
+      <h3 class="text-overflow-ellipsis">{{contextTip.user.firstName + ' ' + (contextTip.user.lastName ?
+        contextTip.user.lastName : '')}}</h3>
+      <ion-note item-right>
+        {{context.metadata_time_ago}}
+      </ion-note>
+      <button ion-button clear item-right large color="foursquare"
+              (click)="$event.stopPropagation();openWebLink('weblink');">
+        <ion-icon name="logo-foursquare"></ion-icon>
+      </button>
+
+      <!--<h3 class="header-line-clamp">{{context.text}}</h3>-->
+    </ion-item>
+    <div class="image-with-overlay">
+      <ng-container *ngIf="contextTip.photourl">
+        <img src="{{contextTip.photourl}}">
+      </ng-container>
+
+      <ng-container *ngIf="!contextTip.photourl && context.venue.featuredPhotos.items[0]">
+        <img src="{{context.venue.featuredPhotos.items[0].prefix + 'original' + context.venue.featuredPhotos.items[0].suffix}}">
+      </ng-container>
+
+      <div class="image-with-overlay-content">
+        <div class="content-title">{{context.venue.name}}</div>
+        <ion-chip color="light">
+          <button ion-button small color="primary">
+            <ion-icon name="pin"></ion-icon>
+          </button>
+          <ion-label>
+            <ng-container *ngIf="context.venue.location as location">
+              {{(location.address ? location.address + ', ' : '') + (location.city ? location.city + ', ' : '') + location.country}}
+            </ng-container>
+          </ion-label>
+        </ion-chip>
+        <br>
+        <ng-container *ngFor="let cat of context.venue.categories;">
+          <button ion-button small>
+            <img src="{{cat.icon.prefix + '32' + cat.icon.suffix}}"/>{{cat.name}}
+          </button>
+        </ng-container>
+      </div>
+    </div>
+
+    <ion-card-content>
+      <p *ngIf="!showDetail" class="header-line-clamp">{{contextTip.text}}</p>
+      <p *ngIf="showDetail" [innerHTML]="contextTip.text | linky"></p>
+
+      <!--<ion-note *ngIf="!showDetail">
+        <ion-icon name="pin" color="secondary"></ion-icon>
+        {{context.venue.name}}
+      </ion-note>-->
+
+    </ion-card-content>
+
+    <ion-row>
+      <!--<ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4</div>
+        </button>
+      </ion-col>-->
+      <ion-col>
+        <button ion-button icon-left clear small full
+                (click)="$event.stopPropagation();">
+          <ion-icon name="heart"></ion-icon>
+          <div>{{contextTip.likes ? contextTip.likes.count : 0}}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small full
+                (click)="$event.stopPropagation();">
+          <ion-icon name="logo-foursquare"></ion-icon>
+          <div>{{context.venue.rating}}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button clear small color="primary" full
+                icon-left
+                (click)="$event.stopPropagation();onShare(context);">
+          <ion-icon name='share-alt'></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-card>

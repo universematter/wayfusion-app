@@ -14,6 +14,7 @@ export const CLIENT_SECRET = '82w85z3DXpLhr1okTFlrtx^jQiwq48xp';
 export const CLIENT_ID = 'webV1';
 export const FACEBOOK_ID = '1110400792420844';
 export const TWITTER_KEY = 'JVqjd0jioxZz1TbJEgkmYiwKj';
+export const FOURSQUARE_ID = 'OUNVOCL01LYF3C3RCKP0MFF2O1JTUSOYJ1M1MP5SFRTARKBG';
 
 //storage constants
 export const HAS_LOGGED_IN = 'hasLoggedIn';
